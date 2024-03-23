@@ -5,4 +5,5 @@
 `git commit -m <message>` - commit the changes with message
 `git branch` - current branch
 `git checkout -b <branch-name>` - create a new branch
+`git checkout <branch-name>` - checkout to a existing branch
 `git merge <branch-name>` - merge <branch-name> to current checked out branched
