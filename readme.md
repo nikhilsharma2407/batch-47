@@ -1,7 +1,9 @@
 1. `git init` - initialise a new git repo
 2. `git status` - check the current status
 3. `git add <filename>` - add files to tracking/staging
+3. `git add .` - add files to tracking/staging in current directory
 4. `git checkout <filename>` - discard any changes to file
+4. `git checkout .` - discard all changes in current directory
 5. `git commit -m <message>` - commit the changes with message
 6. `git branch` - current branch
 7. `git checkout -b <branch-name>` - create a new branch
