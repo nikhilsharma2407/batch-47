@@ -2,3 +2,4 @@
 `git status` - check the current status
 `git add <filename>` - add files to tracking/staging
 `git checkout <filename>` - discard any changes to file
+`git commit -m <message>` - commit the changes with message
