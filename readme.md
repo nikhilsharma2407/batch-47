@@ -8,3 +8,7 @@
 8. `git checkout <branch-name>` - checkout to a existing branch
 9. `git merge <branch-name>` - merge <branch-name> to current checked out branched
 10. `git reset head` - unstage the changes
+11. `git push -u origin <branch-name>` create a new branch on upstream (github)
+11. `git push` - push changes to upstream(github) branch
+11. `git pull` - pull changes from upstream(github) branch
+11. `git clone <url>` - used to clone a git repo
