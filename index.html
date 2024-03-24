@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning HTML</title>
+
+    <!-- extrenal  CSS file-->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* internal/embedded     */
+
+        body {
+            height: 5000px;
+        }
+
+        h6 {
+            border: 1px solid green;
+        }
+
+        input {
+            border: 1px solid red;
+        }
+
+        input[type="password"][placeholder="Enter password"] {
+            background-color: red;
+        }
+
+        .form-input.password {
+            background-color: green;
+        }
+
+        .form-input {
+            border: 1px solid green;
+        }
+
+        #name {
+            border: 1px solid purple;
+        }
+
+        .form-input .password {}
+
+        div p {
+            background-color: red;
+        }
+
+        div>p {
+            background-color: green;
+        }
+    </style>
 </head>
+
+
 <body>
     Hello World!!!
 
@@ -15,18 +63,163 @@
     <h4>Heading-4</h4>
     <h5>Heading-5</h5>
     <h6>Heading-6</h6>
-    
-    <section>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae quos, unde soluta possimus animi dolor asperiores placeat! Natus repellendus soluta, eius aspernatur ipsa nisi ea fugit esse laudantium sequi consectetur!</p>
-    </section>
-    
-    <form>
+
+
+    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. <span style="color: red;">RED COLOR</span> Quaerat,
+        hic.</div>
+
+    <!-- lists -->
+    <!-- ordered  -->
+
+    <ol start="10" reversed>
+        <li>list item - 1</li>
+        <li>list item - 2</li>
+        <li>list item - 3</li>
+        <li>list item - 4</li>
+        <li>list item - 5</li>
+    </ol>
+
+    <ul>
+        <li>unordered list - 1</li>
+        <li>unordered list - 2</li>
+        <li>unordered list - 3</li>
+        <li>unordered list - 4</li>
+        <li>unordered list - 5</li>
+    </ul>
+
+
+
+    <br />
+
+    <a href="https://www.geeksforgeeks.org/">
+        <img src="data:image/jpeg;base64,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oqmtbIA6OXTK0DKDa4B19JTEREwiZnUp9tHtqYamOiooBW1Tz6cYkyMhZvLpHgOynUG1tx5loc2m2ylpp4qOmozW1csfWGNsojY1mouXuHNruW7Ui4vFdm3eb9bJBWta6GveXRYkfWLuxO47tSSTwLi7UOOXo9IH2bJWwsqaiow+pbEXR10TuqbkubMMh0OpeeFtRcZrGuo2tvskuye0c1W6WOpoJqGWAjMH+nE7NqMkoAa4gWJA5jUqSKtejraCofXVFE6sbicEMYeysDQC0ksAYXDR17u1udYzrvAspVmNStE7gREUJEREBERAREQFq4jhsNSzJPDHOzsyxteL87OG9bSIObhWAUlKSaelggLt7oomtJ95AuV0SLr1EHIpNmKKKXro6KmjkvfrGQMDgTvIIGh9y6ksbXAtcA4OFiCAQQd4IO8L7RBysN2bo6Z5kgo6eF59uOFjXWO8AgaDuC2anCoJJY5nwsdLDfq5HNBcy+/KeF1uIg5+JYJTVLmOngjldCbsc9gLmG4N2u3jUA6cgseKbO0dU4OqKSCdzRYOlia51uVyL27l1EQYqanZE0MjY2NjRZrGNDWtHIAaBYMMwqCmDmwQshEji9wjaGhzzYFxtvOg17luIg52K4FS1dvKaaGfL6plia4j3Ei4WxS0MUUYijiZHGBYRxsDWgHeA0aBbKINTC8MhpYxFTxMhjBJDI2hrQTvNgs88DZGlr2te1wsWuaCCORB0KyIg41DsrQwP6yGipo3jc9kDA4e4gej4LsoiDkVezFFLJ10lFTSSXv1j4GFxPAkkan3rrAWXqIOP5r0PW9d5FTdbe/WdQzNm7V7b+/etvFsJgq2COphjnYHB2SRocMwBANjxsT8Vuog1MTwyGpZ1dREyZhIJZIwOFxqDY8Vr1OAUssTIZKaGSKIAMjkja5rANBlB9Ww00XTRBp4ZhcFKzJTwxwNvfLFG1gJ5mw1PetxEQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQf/2Q=="
+            alt="GeeksForGeeks logo" />
+    </a>
+    <br />
+    <!-- anchor tag -->
+    <a href="https://www.google.com/">Google Search</a>
+    <br />
+    <a href="https://www.google.com/" target="_blank">Open google in new tab</a>
+    <a href="https://www.google.com/" target="iframe">Open google in Iframe</a>
+
+    <br />
+
+
+    <iframe name="iframe" width="250px" height="250px" src="https://iframetester.com/"></iframe>
+
+
+    <table>
+        <thead>
+            <th>
+                <tr>
+                    <td>heading 1</td>
+                    <td>heading 2</td>
+                    <td>heading 3</td>
+                </tr>
+            </th>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td colspan="3">table data 1</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 3</td>
+                <td>table data 2</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+            <tr>
+                <td>table data 1</td>
+                <td>table data 2</td>
+                <td>table data 3</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <!-- <section>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae quos, unde soluta possimus animi dolor asperiores placeat! Natus repellendus soluta, eius aspernatur ipsa nisi ea fugit esse laudantium sequi consectetur!
+        </p>
+    </section> -->
+
+
+    <!-- input class="form-input" tag -->
+
+
+    <form style="margin-top: 50px;">
         <label for="name">name</label>
-        <input id="name" placeholder="Type your name"/>
+        <input class="form-input" id="name" placeholder="Type your name" />
+        <br>
+        <label for="exp">exp</label>
+        <input class="form-input" id="exp" placeholder="your Experience" type="number" min="1" max="10" />
+        <br>
         <label for="age">age</label>
-        <input id="age" placeholder="Type your age" type="date"/>
+        <input class="form-input" id="age" placeholder="Type your age" type="date" />
+        <br>
+        <input class="form-input" class="password" id="pwd" placeholder="Enter your password" type="password" />
         <button type="submit">Submit</button>
-        
+        <br>
+        <input class="form-input" id="pwd" placeholder="Upload your resume" type="file" accept=".pdf" />
+        <button type="submit">Submit</button>
+        <br>
+        <label for="accept">Accept TnC</label> <input class="form-input" id="accept" type="checkbox" value="yes" />
+        <br>
+        <label for="m">Male</label>
+        <input class="form-input" id="m" type="radio" value="male" name="gender" />
+        <label for="f">Female</label>
+        <input class="form-input" id="f" type="radio" value="female" name="gender" />
+
+        <input class="form-input" type="color">
     </form>
+
+
+    <section>
+
+        <div>
+            <p>P inside div directly p1 (p is child of div)</p>
+            <section>
+                <p>P inside section p2</p>
+            </section>
+        </div>
+
+    </section>
+
+
 </body>
+
 </html>
