@@ -332,8 +332,23 @@ arr[2][0] = 0;
 console.log("🚀 ~ arr:", arr)  // [999,2,[0,4]]
 console.log("🚀 ~ shallowCopyArr:", shallowCopyArr) // // [1,2,[0,4]]
 
-// 
 
+const employee = {
+    name:"Nikhil",
+    id:101,
+    dept: {
+        name:"Engg",
+        id:"E101"
+    }
+};
 
+const employee2 = {
+    ...employee
+}
 
+employee2.name ="abcd";
+employee2.dept.name ="Accounting";
 
+employee.name = "Nikhil Sharma";
+
+console.log("🚀 ~ employee:", employee);
