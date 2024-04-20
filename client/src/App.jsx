@@ -3,6 +3,9 @@ import './App.css';
 import ClassComponent from './ClassComponent';
 import { useState } from 'react';
 import FunctionalComponent from './FunctionalComponent';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Flexbox from './Flexbox';
+import BootstrapDemo from './BootstrapDemo';
 
 // js + html = JSX
 
@@ -20,9 +23,11 @@ function App() {
   // props are read only
   return (
     <>
+    <Flexbox />
+    {/* <BootstrapDemo /> */}
       {/* conditional rendering */}
-      {displayComponent ? <FunctionalComponent name={name} id={id} fn={greet} /> : null}
-      <button onClick={() => setdisplayComponent(!displayComponent)}> {displayComponent ? 'Hide' : 'Show'}</button >
+      {/* {displayComponent ? <FunctionalComponent name={name} id={id} fn={greet} /> : null} */}
+      {/* <button onClick={() => setdisplayComponent(!displayComponent)}> {displayComponent ? 'Hide' : 'Show'}</button > */}
     </>
     // <div>
     //   Hello { name }

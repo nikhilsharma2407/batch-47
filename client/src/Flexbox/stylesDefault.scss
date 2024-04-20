@@ -1,0 +1,20 @@
+.flexbox {
+    .container {
+        display: flex;
+        border: 1px dashed black;
+        padding: 5px;
+        margin-top: 20px;
+        height: 700px;
+        flex-direction: column;
+    }
+
+    .flex-item {
+        height: 50px;
+        width: 50px;
+        border: 1px solid red;
+    }
+
+    .flex-item:nth-child(even) {
+        align-self: flex-end;
+    }
+}
