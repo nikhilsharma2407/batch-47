@@ -16,15 +16,3 @@
     justify-content: center;
 
 }
-
-.flex-item:nth-child(3n+1) {
-    align-self: flex-start;
-}
-
-.flex-item:nth-child(3n+2) {
-    align-self: center;
-}
-
-.flex-item:nth-child(3n) {
-    align-self: flex-end;
-}
