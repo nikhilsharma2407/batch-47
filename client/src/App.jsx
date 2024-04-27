@@ -11,6 +11,7 @@ import MyNavbar from './MyNavbar';
 import RoutingDemo from './RoutingDemo';
 import Parent from './RoutingDemo/Parent';
 import Child from './RoutingDemo/Child';
+import Products from './Products';
 
 // js + html = JSX
 
@@ -31,6 +32,7 @@ function App() {
       <BrowserRouter>
         <MyNavbar />
         <Routes>
+          <Route path='' element={<Products />} />
           <Route path='/fc' element={<FunctionalComponent />} />
           <Route path='/flex' element={<Flexbox />} />
           <Route path='/bootstrap' element={<BootstrapDemo />} />

@@ -1,0 +1,23 @@
+.product{
+    cursor: pointer;
+
+    .image{
+        height: 250px !important;
+        object-fit: contain;
+    }
+
+    .content{
+        height: 150px;
+    }
+
+    .text{
+        font-size: 13px;
+        color: #666;
+    }
+
+    .desc{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}

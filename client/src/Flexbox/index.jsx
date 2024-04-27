@@ -1,6 +1,6 @@
 import React from 'react'
 // import './stylesDefault.scss'
-import './styles.scss'
+import './stylesDefault.scss'
 
 function Flexbox() {
   return (

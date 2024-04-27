@@ -1,8 +1,11 @@
 import React from 'react'
 import { Button, Container, Form, Nav, NavDropdown, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 function MyNavbar() {
+
+  const [, setSearchParams] = useSearchParams();
+
   return (
     <Navbar expand="md" bg="dark" data-bs-theme="dark">
       <Container fluid>
@@ -23,6 +26,8 @@ function MyNavbar() {
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              onChange={e => setSearchParams({ search: e.target.value.toLowerCase() })}
+
             />
             <Button variant="outline-primary">Search</Button>
           </Form>
