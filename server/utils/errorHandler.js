@@ -1,0 +1,9 @@
+module.exports = async (err, req, res, next) => {
+    console.log("🚀 ~ errHandler:", err);
+    if (err.code === 11000) {
+        err.message = "username already exists!!!"
+        err.status = 403;
+    }
+    res.status(err.status || 500);
+    res.send({ success: false, message: err.message })
+}

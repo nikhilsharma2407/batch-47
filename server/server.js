@@ -1,12 +1,14 @@
 const express = require("express");
 
 const app = express();
-
+require('./dbConnection');
 // used to read data passed to request body
 app.use(express.json());
 
 // router middleware
 const router = require("./routes/router");
+const errorHandler = require("./utils/errorHandler");
+const userRouter = require("./routes/userRouter");
 
 const PORT = 4000;
 
@@ -23,11 +25,11 @@ app.get('/checkServer',(req,res)=>{
 // http://localhost:4000/router
 app.use('/router',router);
 
-// app.use('/user',userRouter);
-// app.use('/cart',cartRouter);
 
-// http://localhost:4000/
-// app.get('/')
+// userRouter->signupController
+app.use('/user',userRouter);
+
+app.use(errorHandler);
 
 
 app.listen(PORT,()=>{
