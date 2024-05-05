@@ -40,7 +40,7 @@ userSchema.statics.createUser = async (userdata) => {
     return data;
 }
 userSchema.statics.findUser = async (username) => {
-    const user = await UserModel.findOne({ username },{_id:0,__v:0});
+    const user = (await UserModel.findOne({ username },{_id:0,__v:0}))?.toObject();
     if(user){
         return user;
     }

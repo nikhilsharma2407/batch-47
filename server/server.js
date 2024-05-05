@@ -1,14 +1,17 @@
 const express = require("express");
 
 const app = express();
+const cookieParser = require("cookie-parser");
 require('./dbConnection');
 // used to read data passed to request body
 app.use(express.json());
-
+app.use(cookieParser());
 // router middleware
 const router = require("./routes/router");
 const errorHandler = require("./utils/errorHandler");
 const userRouter = require("./routes/userRouter");
+const { authController } = require("./controllers/authController");
+const cartRouter = require("./routes/cartRouter");
 
 const PORT = 4000;
 
@@ -28,6 +31,7 @@ app.use('/router',router);
 
 // userRouter->signupController
 app.use('/user',userRouter);
+app.use('/cart',cartRouter);
 
 app.use(errorHandler);
 
