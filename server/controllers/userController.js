@@ -9,7 +9,7 @@ const login = async (req, res, next) => {
         const { password: pwdHash, ...userData } = await UserModel.findUser(username);
         const isValid = await verifyPassword(password, pwdHash);
         if (isValid) {
-            const token = generateToken(userData, "10s");
+            const token = generateToken(userData);
             res.cookie('token', token, { maxAge: 3600_000, httpOnly: true });
             res.send(responseCreator("User logged in successfully", userData));
         } else {
