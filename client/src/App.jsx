@@ -12,6 +12,8 @@ import RoutingDemo from './RoutingDemo';
 import Parent from './RoutingDemo/Parent';
 import Child from './RoutingDemo/Child';
 import Products from './Products';
+import Login from './Login';
+import Signup from './Signup';
 
 // js + html = JSX
 
@@ -33,6 +35,8 @@ function App() {
         <MyNavbar />
         <Routes>
           <Route path='' element={<Products />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
           <Route path='/fc' element={<FunctionalComponent />} />
           <Route path='/flex' element={<Flexbox />} />
           <Route path='/bootstrap' element={<BootstrapDemo />} />

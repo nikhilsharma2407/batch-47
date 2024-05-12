@@ -2,18 +2,19 @@ const UserModel = require("../models/UserModel");
 const { generateToken } = require("../utils/jwtUtil");
 const { generatePasswordHash, verifyPassword } = require("../utils/passwordUtil");
 const { errorCreator, responseCreator } = require("../utils/responseHandler");
+const { generateQRcode, verifyOTP } = require("../utils/totpUtils");
 
 const login = async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        const { password: pwdHash, ...userData } = await UserModel.findUser(username);
+        const { secret, password: pwdHash, ...userData } = await UserModel.findUser(username);
         const isValid = await verifyPassword(password, pwdHash);
         if (isValid) {
             const token = generateToken(userData);
             res.cookie('token', token, { maxAge: 3600_000, httpOnly: true });
             res.send(responseCreator("User logged in successfully", userData));
         } else {
-            errorCreator("Incorrect password", 404);
+            errorCreator("Incorrect password", 401);
         }
     } catch (error) {
         next(error)
@@ -25,10 +26,16 @@ const signup = async (req, res, next) => {
         const { password, ...userdata } = req.body;
         const pwdHash = await generatePasswordHash(password);
         userdata.password = pwdHash;
-        const data = await UserModel.createUser(userdata);
+        const { qrcode, secret } = await generateQRcode(userdata.username);
+        console.log("🚀 ~ signup ~ qrcode, secret:", qrcode, secret)
+        const data = await UserModel.createUser({ ...userdata, secret });
         if (data) {
             res.status(201);
-            res.send({ success: true, message: "user account created successfully!!!" })
+            res.send({ success: true, message: "user account created successfully!!!", qrcode })
+            // res.send(`
+            // <h1>Scan the qrcode using Google Authenticator</h1>
+            // <img src=${qrcode} />
+            // `)
         }
     } catch (error) {
         next(error);
@@ -46,4 +53,25 @@ const loginWithCookie = async (req, res, next) => {
 
 }
 
-module.exports = { login, signup, loginWithCookie };
+const resetPassword = async (req, res, next) => {
+    try {
+        const { username, otp, password } = req.body;
+        if (!otp) {
+            errorCreator('Please Enter OTP', 401);
+        }
+        const { secret } = await UserModel.findUser(username);
+        console.log("🚀 ~ resetPassword ~ secret:", secret)
+        const isOTPVerified = verifyOTP(secret, otp);
+        if (isOTPVerified) {
+            const pwdHash = await generatePasswordHash(password)
+            const message = await UserModel.updatePassword(username, pwdHash);
+            res.send(responseCreator(message))
+        } else {
+            errorCreator('Invalid OTP', 401);
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = { login, signup, loginWithCookie, resetPassword };

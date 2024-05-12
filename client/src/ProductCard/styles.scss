@@ -1,4 +1,9 @@
+@import "../common.scss";
+
 .product{
+
+    @include boxShadow;
+
     cursor: pointer;
 
     .image{

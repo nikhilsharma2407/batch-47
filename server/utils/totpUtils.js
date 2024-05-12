@@ -1,8 +1,8 @@
 const speakeasy = require("speakeasy");
 const QRcode = require("qrcode");
 
-const generateQRcode = async () => {
-    const { base32: secret, otpauth_url } = speakeasy.generateSecret({ name: 'GeeksForGeeks' });
+const generateQRcode = async (username) => {
+    const { base32: secret, otpauth_url } = speakeasy.generateSecret({ name: username,issuer:'GeeksForGeeks' });
     const qrcode = await QRcode.toDataURL(otpauth_url);
 
     return { secret, qrcode }
@@ -14,7 +14,8 @@ const verifyOTP = (secret, otp) => {
         token: otp,
         encoding: "base32"
     });
+    console.log("🚀 ~ verifyOTP ~ isVerified:", isVerified)
     return isVerified;
 };
 
-module.exports = { generateQRcode, speakeasy }
+module.exports = { generateQRcode, verifyOTP }

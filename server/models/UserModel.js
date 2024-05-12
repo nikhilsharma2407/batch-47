@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 const { errorCreator } = require("../utils/responseHandler");
 
 const formattedUserData = (userdata) => {
-    const { _id, __v, password, ...data } = userdata?.toObject();
+    const { _id, __v, secret, password, ...data } = userdata?.toObject();
     return data
 }
 
@@ -20,7 +20,9 @@ const userSchema = new Schema({
         type: String,
         required: [true, "password is mandatory"],
     },
-
+    secret: {
+        type: String,
+    },
     cart: {
         type: [Object],
         default: []
@@ -53,7 +55,6 @@ userSchema.statics.findUser = async (username) => {
     const err = new Error("user doesn't exists");
     err.status = 404;
     throw err;
-
 }
 
 userSchema.statics.getCart = async (username) => {
@@ -111,7 +112,29 @@ userSchema.statics.clearCart = async (username) => {
 
 userSchema.statics.checkout = async (username) => {
     const orderId = Math.random() * 100000;
-    
+    const { cart, totalCount, totalValue } = await UserModel.getCart(username)
+    const order = {
+        orderId,
+        items: cart,
+        totalCount,
+        totalValue
+    };
+
+    const data = await UserModel.updateOne({ username }, {
+        $push: { orders: order }
+    });
+    if (data.modifiedCount) {
+        return { orderId, totalCount }
+    }
+};
+
+userSchema.statics.updatePassword = async (username, password) => {
+    const updatedData = await UserModel.updateOne({ username }, {
+        $set: { password }
+    });
+    if (updatedData.modifiedCount) {
+        return "Password reset successfully"
+    }
 };
 
 const UserModel = model("users", userSchema);

@@ -6,6 +6,7 @@ require('./dbConnection');
 // used to read data passed to request body
 app.use(express.json());
 app.use(cookieParser());
+const cors = require("cors");
 // router middleware
 const router = require("./routes/router");
 const errorHandler = require("./utils/errorHandler");
@@ -16,6 +17,11 @@ const cartRouter = require("./routes/cartRouter");
 const PORT = 4000;
 
 // http://localhost:4000/checkServer
+
+app.use(cors({
+    origin:'http://localhost:3000',
+    credentials:true,
+}))
 
 app.get('/checkServer',(req,res)=>{
     console.log(req.path);

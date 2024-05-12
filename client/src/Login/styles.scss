@@ -1,0 +1,6 @@
+@import "../common.scss";
+
+.login {
+    border-radius: 10px;
+    @include boxShadow
+}
