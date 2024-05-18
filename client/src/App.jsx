@@ -14,6 +14,7 @@ import Child from './RoutingDemo/Child';
 import Products from './Products';
 import Login from './Login';
 import Signup from './Signup';
+import Counter from './Counter';
 
 // js + html = JSX
 
@@ -41,6 +42,7 @@ function App() {
           <Route path='/flex' element={<Flexbox />} />
           <Route path='/bootstrap' element={<BootstrapDemo />} />
           <Route path='/routing/:productId' element={<RoutingDemo />} />
+          <Route path='/reducer' element={<Counter />} />
           <Route path='/parent' element={<Parent />}>
             <Route path='child1' element={<Child />} />
             <Route path='child2' element={<h1>child 2</h1>} />

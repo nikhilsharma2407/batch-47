@@ -19,6 +19,7 @@ function MyNavbar() {
             <Nav.Link as={Link} to="/flex">Flex</Nav.Link>
             <Nav.Link as={Link} to="/bootstrap">Bootstrap</Nav.Link>
             <Nav.Link as={Link} to="/routing">Routing</Nav.Link>
+            <Nav.Link as={Link} to="/reducer">Reducer</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link as={Link} to="/login">Login</Nav.Link>
