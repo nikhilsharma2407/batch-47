@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import ClassComponent from './ClassComponent';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import FunctionalComponent from './FunctionalComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Flexbox from './Flexbox';
@@ -15,23 +15,28 @@ import Products from './Products';
 import Login from './Login';
 import Signup from './Signup';
 import Counter from './Counter';
+import useApi from './useApi';
+import { ENDPOINTS } from './apiUtil';
+import Loader from './Loader';
+import { UserContext } from './UserContextProvider';
 
 // js + html = JSX
 
 
 function App() {
-  const [displayComponent, setdisplayComponent] = useState(true);
 
-  const name = "Nikhil";
-  const id = 101;
+  const { makeRequest: login, message } = useApi(ENDPOINTS.USER.LOGIN);
+  const { isLoading } = useContext(UserContext)
+  console.log("🚀 ~ App ~ message:", message)
 
-  const greet = (e) => {
-    alert(`hello ${name}`)
-  }
+  useEffect(() => {
+    login();
+  }, [])
 
   // props are read only
   return (
     <>
+      <Loader isLoading={isLoading}/>
       <BrowserRouter>
         <MyNavbar />
         <Routes>

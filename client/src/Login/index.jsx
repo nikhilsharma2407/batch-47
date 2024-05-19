@@ -1,26 +1,40 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Form, FormControl, FormGroup, FormLabel, Row } from 'react-bootstrap'
 import './styles.scss'
-import axiosInstance, { ENDPOINTS } from '../apiUtil';
+import axiosInstance, { ENDPOINTS, REQUEST_TYPES } from '../apiUtil';
+import useApi from '../useApi';
+import { UserContext } from '../UserContextProvider';
 
 function Login() {
+    const { makeRequest, message, error, isLoading } = useApi(ENDPOINTS.USER.LOGIN, REQUEST_TYPES.POST);
+
+    const { userData } = useContext(UserContext);
+
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
     const isValid = username && password;
 
-    const login = async () => {
-        try {
-            const payload = { username, password }
-            const { data: response } = await axiosInstance.post(ENDPOINTS.USER.LOGIN, payload);
-            console.log("🚀 ~ login ~ data:", response.data);
-            alert(response.message);
-        } catch (error) {
-            const errData = error.response?.data
-            // console.log("🚀 ~ login ~ error:", error.response.data);
-            alert(errData.message)
-        }
+
+    useEffect(() => {
+        console.log("🚀 ~ useEffect ~ data,message,error:", { userData, message, error, isLoading })
+    }, [error, message, userData, isLoading])
+
+    const login = () => {
+        const payload = { username, password }
+        makeRequest(payload)
+
+        // try {
+        //     const payload = { username, password }
+        //     // const { data: response } = await axiosInstance.post(ENDPOINTS.USER.LOGIN, payload);
+        //     // console.log("🚀 ~ login ~ data:", response.data);
+        //     // alert(response.message);
+        // } catch (error) {
+        //     const errData = error.response?.data
+        //     // console.log("🚀 ~ login ~ error:", error.response.data);
+        //     alert(errData.message)
+        // }
     }
 
     return (

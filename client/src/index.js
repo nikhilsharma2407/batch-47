@@ -6,14 +6,17 @@ import { applyMiddleware, createStore } from 'redux';
 import { countReducer } from './reducers/countReducer';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
-import { thunk} from 'redux-thunk'
+import { thunk } from 'redux-thunk'
+import UserContextProvider from './UserContextProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = createStore(countReducer, applyMiddleware(thunk, logger))
 
 root.render(
   <Provider store={store}>
-    <App />
+    <UserContextProvider>
+      <App />
+    </UserContextProvider>
   </Provider>
 );
 

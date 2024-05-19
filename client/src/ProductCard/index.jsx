@@ -1,18 +1,34 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Badge, Button, Card, Col, Image } from 'react-bootstrap'
 import "./styles.scss"
 import { CartPlus, TrashFill } from 'react-bootstrap-icons'
 import CartCounter from '../CartCounter'
 import StarRatings from 'react-star-ratings'
-function ProductCard({
-    id,
-    title,
-    price,
-    description,
-    category,
-    image,
-    rating,
-}) {
+import useApi from '../useApi'
+import { ENDPOINTS, REQUEST_TYPES } from '../apiUtil'
+import { UserContext } from '../UserContextProvider'
+function ProductCard({ product, cart = [], isLoading = false }) {
+    const {
+        id,
+        title,
+        price,
+        description,
+        category,
+        image,
+        rating,
+    } = product;
+
+    
+    console.log("🚀 ~ ProductCard ~ cart:", cart);
+    const cartItem = cart.find(product => product.id === id) || {};
+    console.log("🚀 ~ ProductCard ~ cartItem:", cartItem);
+
+
+    const { makeRequest: addToCart } = useApi(ENDPOINTS.CART.ADD_TO_CART, REQUEST_TYPES.POST)
+    const { makeRequest: removeFromCart } = useApi(ENDPOINTS.CART.REMOVE_FROM_CART, REQUEST_TYPES.POST)
+
+
+
     return (
         <Col className='mt-3' span={10} offset={1} sm={{ span: 10, offset: 1 }} md={{ span: 5, offset: 0 }}
             lg={{ span: 4, offset: 0 }}
@@ -37,11 +53,10 @@ function ProductCard({
                     </div>
                 </Card.Body>
                 <Card.Footer>
-                    {/* <Button variant='outline-primary'><CartPlus /> Add to Cart</Button> */}
-                    <div className='d-flex align-items-center'>
-                        <CartCounter quantity={10} />
-                        <TrashFill className='text-danger ms-auto' height="20px" width="20px" />
-                    </div>
+                    {cartItem?.quantity ? <div className='d-flex align-items-center'>
+                        <CartCounter disabled={isLoading}  product={cartItem} />
+                        <TrashFill disabled={isLoading} onClick={() => removeFromCart(cartItem)} className='text-danger ms-auto' height="20px" width="20px" />
+                    </div> : <Button disabled={isLoading} onClick={() => addToCart(product)} variant='outline-primary'><CartPlus /> Add to Cart</Button>}
                 </Card.Footer>
             </Card >
         </Col>
