@@ -2,14 +2,21 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Card, Container, Row, Col } from 'react-bootstrap'
 import './styles.scss'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import useApi from '../useApi';
+import { ENDPOINTS, REQUEST_TYPES } from '../apiUtil';
+import { UserContext } from '../UserContextProvider';
 
 function Signup() {
+  const { makeRequest } = useApi(ENDPOINTS.USER.SIGNUP, REQUEST_TYPES.POST);
+
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const [qrcode, setQrcode] = useState(null);
+  // const [qrcode, setQrcode] = useState(null);
+
+  const { userData: qrcode } = useContext(UserContext)
 
   const ENTER_KEY_CODE = 13;
 
@@ -23,6 +30,7 @@ function Signup() {
     if (!isFormValid) return;
     console.log('Signup Clicked');
     const payload = { name, username, password }
+    makeRequest(payload);
   }
 
   const onKeyUp = (e) => {
@@ -40,7 +48,7 @@ function Signup() {
         <Col lg={{ span: 4, offset: 4 }} md={{ span: 6, offset: 3 }} sm={{ span: 10, offset: 1 }}>
           <Card className='mt-5 signup'>
             <Card.Body>
-              {qrcode? <>
+              {qrcode ? <>
                 <h1>Two Factor Authentication setup</h1>
                 <h2>Please scan the QRcode with Google Authenticator</h2>
                 <div className='d-flex justify-content-center'>

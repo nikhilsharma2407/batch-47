@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types: { Decimal128 } } = require("mongoose");
 const { errorCreator } = require("../utils/responseHandler");
 
 const formattedUserData = (userdata) => {
@@ -32,13 +32,19 @@ const userSchema = new Schema({
         default: []
     },
     totalValue: {
-        type: Number,
+        type: Decimal128,
+        set: (value) => new Decimal128(value.toFixed(2)),
+        get: (value) => parseFloat(value),
         default: 0
     },
     totalCount: {
         type: Number,
         default: 0
     },
+}, {
+    toObject: {
+        getters: true,
+    }
 });
 
 userSchema.statics.createUser = async (userdata) => {
@@ -64,11 +70,11 @@ userSchema.statics.getCart = async (username) => {
 }
 
 userSchema.statics.addToCart = async (username, product) => {
-    const { _id, __v, password, ...data } = (await UserModel.findOneAndUpdate({ username }, {
+    const data = (await UserModel.findOneAndUpdate({ username }, {
         $push: { cart: { ...product, quantity: 1 } },
         $inc: { totalCount: 1, totalValue: product.price }
-    }, { new: true }))?.toObject();
-    return data
+    }, { new: true }))
+    return formattedUserData(data)
 }
 
 userSchema.statics.removeFromCart = async (username, product) => {
@@ -91,9 +97,9 @@ userSchema.statics.increment = async (username, product, increment = true) => {
 
     const userData = formattedUserData(data);
     if (!increment && userData.cart.some(({ quantity }) => quantity === 0)) {
-        const removeZeroQty = await UserModel({ username }, {
+        const removeZeroQty = await UserModel.findOneAndUpdate({ username }, {
             $pull: { cart: { quantity: 0 } }
-        });
+        }, { new: true });
         return formattedUserData(removeZeroQty)
     };
     return userData;

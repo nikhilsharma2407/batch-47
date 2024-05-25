@@ -1,0 +1,12 @@
+.cart-count {
+    position: relative;
+    top: -30px;
+    left: 15px;
+}
+
+@media only screen and (min-width:768px) {
+    .cart-count {
+        top: -10px;
+        left: -10px;
+    }
+}

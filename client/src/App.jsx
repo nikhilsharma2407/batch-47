@@ -19,6 +19,8 @@ import useApi from './useApi';
 import { ENDPOINTS } from './apiUtil';
 import Loader from './Loader';
 import { UserContext } from './UserContextProvider';
+import Toast from './Toast';
+import CartComponent from './CartComponent';
 
 // js + html = JSX
 
@@ -36,6 +38,7 @@ function App() {
   // props are read only
   return (
     <>
+      <Toast />
       <Loader isLoading={isLoading}/>
       <BrowserRouter>
         <MyNavbar />
@@ -45,6 +48,7 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/fc' element={<FunctionalComponent />} />
           <Route path='/flex' element={<Flexbox />} />
+          <Route path='/cart' element={<CartComponent />} />
           <Route path='/bootstrap' element={<BootstrapDemo />} />
           <Route path='/routing/:productId' element={<RoutingDemo />} />
           <Route path='/reducer' element={<Counter />} />

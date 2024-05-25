@@ -7,7 +7,8 @@ import StarRatings from 'react-star-ratings'
 import useApi from '../useApi'
 import { ENDPOINTS, REQUEST_TYPES } from '../apiUtil'
 import { UserContext } from '../UserContextProvider'
-function ProductCard({ product, cart = [], isLoading = false }) {
+import { useNavigate } from 'react-router'
+function ProductCard({ product, cart = [], isLoading = false, isLoggedIn }) {
     const {
         id,
         title,
@@ -18,14 +19,22 @@ function ProductCard({ product, cart = [], isLoading = false }) {
         rating,
     } = product;
 
-    
+
     console.log("🚀 ~ ProductCard ~ cart:", cart);
     const cartItem = cart.find(product => product.id === id) || {};
     console.log("🚀 ~ ProductCard ~ cartItem:", cartItem);
 
+    const navigate = useNavigate();
 
-    const { makeRequest: addToCart } = useApi(ENDPOINTS.CART.ADD_TO_CART, REQUEST_TYPES.POST)
-    const { makeRequest: removeFromCart } = useApi(ENDPOINTS.CART.REMOVE_FROM_CART, REQUEST_TYPES.POST)
+
+    const { makeRequest: addToCart } = useApi(ENDPOINTS.CART.ADD_TO_CART, REQUEST_TYPES.POST, false);
+    const { makeRequest: removeFromCart } = useApi(ENDPOINTS.CART.REMOVE_FROM_CART, REQUEST_TYPES.POST);
+
+    const loginCheck = () => {
+        if (!isLoggedIn) {
+            navigate('login', { state: { redirectionURL: '/' } });
+        }
+    };
 
 
 
@@ -54,9 +63,9 @@ function ProductCard({ product, cart = [], isLoading = false }) {
                 </Card.Body>
                 <Card.Footer>
                     {cartItem?.quantity ? <div className='d-flex align-items-center'>
-                        <CartCounter disabled={isLoading}  product={cartItem} />
-                        <TrashFill disabled={isLoading} onClick={() => removeFromCart(cartItem)} className='text-danger ms-auto' height="20px" width="20px" />
-                    </div> : <Button disabled={isLoading} onClick={() => addToCart(product)} variant='outline-primary'><CartPlus /> Add to Cart</Button>}
+                        <CartCounter disabled={isLoading} product={cartItem} />
+                        <TrashFill disabled={isLoading} onClick={() => { loginCheck(); removeFromCart(cartItem) }} className='text-danger ms-auto' height="20px" width="20px" />
+                    </div> : <Button disabled={isLoading} onClick={() => { loginCheck(); addToCart(product) }} variant='outline-primary'><CartPlus /> Add to Cart</Button>}
                 </Card.Footer>
             </Card >
         </Col>

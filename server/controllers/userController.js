@@ -31,11 +31,7 @@ const signup = async (req, res, next) => {
         const data = await UserModel.createUser({ ...userdata, secret });
         if (data) {
             res.status(201);
-            res.send({ success: true, message: "user account created successfully!!!", qrcode })
-            // res.send(`
-            // <h1>Scan the qrcode using Google Authenticator</h1>
-            // <img src=${qrcode} />
-            // `)
+            res.send(responseCreator("user account created successfully!!!",qrcode))
         }
     } catch (error) {
         next(error);
@@ -74,4 +70,9 @@ const resetPassword = async (req, res, next) => {
     }
 }
 
-module.exports = { login, signup, loginWithCookie, resetPassword };
+const logout = async (req,res,next)=>{
+    res.clearCookie('token')
+    res.send(responseCreator("Logged out!!!",null))
+}
+
+module.exports = { login, signup, loginWithCookie, resetPassword, logout };

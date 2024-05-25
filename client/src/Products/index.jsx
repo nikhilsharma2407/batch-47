@@ -69,7 +69,12 @@ function Products() {
             <Sort sortedList={products} setSortedList={setProducts} />
 
             <Row>
-                {products.filter(filterProducts).filter(search).map(product => <ProductCard isLoading={isLoading} cart={cart} key={product.id} product={product} />)}
+                {products.filter(filterProducts).filter(search).map(product => <ProductCard
+                    isLoading={isLoading}
+                    cart={cart} key={product.id}
+                    product={product}
+                    isLoggedIn={!!userData}
+                />)}
             </Row>
         </Container>
     )

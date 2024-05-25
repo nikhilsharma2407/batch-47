@@ -7,7 +7,7 @@ const authController = async (req, res, next) => {
         console.log("🚀 ~ authController ~ req.cookies:", req.cookies)
         console.log("🚀 ~ authController ~ token:", token)
         const { username } = verifyToken(token);
-        const { password, ...userData } = await UserModel.findUser(username);
+        const { password, secret ,id, ...userData } = await UserModel.findUser(username);
         // res.locals -> placeholder
         res.locals.user = userData;
         next();

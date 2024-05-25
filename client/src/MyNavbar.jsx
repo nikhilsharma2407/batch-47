@@ -1,13 +1,27 @@
-import React from 'react'
-import { Button, Container, Form, Nav, NavDropdown, Navbar } from 'react-bootstrap'
+import React, { useContext } from 'react'
+import { Badge, Button, Container, Form, Nav, NavDropdown, Navbar } from 'react-bootstrap'
 import { Link, useSearchParams } from 'react-router-dom'
+import { UserContext } from './UserContextProvider';
+import { Cart } from 'react-bootstrap-icons';
+import useApi from './useApi';
+import { ENDPOINTS } from './apiUtil';
+import "./style.scss"
+
+
+
 
 function MyNavbar() {
+
+  const { userData } = useContext(UserContext);
+  console.log("🚀 ~ MyNavbar ~ userData:", userData)
+  const totalCount = userData?.totalCount
+
+  const { makeRequest } = useApi(ENDPOINTS.USER.LOGOUT)
 
   const [, setSearchParams] = useSearchParams();
 
   return (
-    <Navbar expand="md" bg="dark" data-bs-theme="dark">
+    <Navbar expand="md" bg='dark' data-bs-theme="dark">
       <Container fluid>
         <Navbar.Brand as={Link} to="/">React Bootstrap</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -21,9 +35,18 @@ function MyNavbar() {
             <Nav.Link as={Link} to="/routing">Routing</Nav.Link>
             <Nav.Link as={Link} to="/reducer">Reducer</Nav.Link>
           </Nav>
-          <Nav>
-            <Nav.Link as={Link} to="/login">Login</Nav.Link>
-            <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
+          <Nav className='d-md-flex align-items-md-center align-items-start'>
+            {userData ? <>
+              <Cart as={Link} to="/cart" size={25} style={{ color: "rgba(255, 255, 255, 0.55)" }} />
+              {totalCount && <Badge className='d-block d-md-flex cart-count' pill bg="primary">{totalCount}</Badge>}
+              
+              <Nav.Link onClick={makeRequest}>Logout</Nav.Link>
+
+            </> : <>
+              <Nav.Link as={Link} to="/login">Login</Nav.Link>
+              <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
+            </>}
+
           </Nav>
           <Form className="d-flex">
             <Form.Control
@@ -38,7 +61,7 @@ function MyNavbar() {
           </Form>
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </Navbar >
   )
 }
 

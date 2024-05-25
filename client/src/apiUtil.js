@@ -6,7 +6,8 @@ export const ENDPOINTS = {
     USER: {
         LOGIN: '/user/login',
         SIGNUP: '/user/signup',
-        RESET_PASSWORD: 'user/resetPassword'
+        RESET_PASSWORD: 'user/resetPassword',
+        LOGOUT: 'user/logout',
     },
     CART: {
         GET_CART: 'cart/getCart',

@@ -4,11 +4,22 @@ import './styles.scss'
 import axiosInstance, { ENDPOINTS, REQUEST_TYPES } from '../apiUtil';
 import useApi from '../useApi';
 import { UserContext } from '../UserContextProvider';
+import { useLocation, useNavigate } from 'react-router';
 
 function Login() {
     const { makeRequest, message, error, isLoading } = useApi(ENDPOINTS.USER.LOGIN, REQUEST_TYPES.POST);
 
     const { userData } = useContext(UserContext);
+
+    const { state } = useLocation();
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (userData && state?.redirectionURL) {
+            navigate(state.redirectionURL, { replace: true })
+        }
+    }, [userData,state])
 
 
     const [username, setUsername] = useState(null);
