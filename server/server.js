@@ -1,6 +1,7 @@
 const express = require("express");
 
 const app = express();
+const path = require('path');
 const cookieParser = require("cookie-parser");
 require('./dbConnection');
 // used to read data passed to request body
@@ -19,30 +20,36 @@ const PORT = 4000;
 // http://localhost:4000/checkServer
 
 app.use(cors({
-    origin:'http://localhost:3000',
-    credentials:true,
+    origin: 'http://localhost:3000',
+    credentials: true,
 }))
 
-app.get('/checkServer',(req,res)=>{
+app.get('/checkServer', (req, res) => {
     console.log(req.path);
     console.log(req.params);
     console.log(req.query);
 
-    res.send({success:true, message:'Successful response from server'});
+    res.send({ success: true, message: 'Successful response from server' });
 });
 
 // http://localhost:4000/router
-app.use('/router',router);
+app.use('/router', router);
 
 
 // userRouter->signupController
-app.use('/user',userRouter);
-app.use('/cart',cartRouter);
+app.use('/user', userRouter);
+app.use('/cart', cartRouter);
+
+app.use('', express.static(path.join(__dirname, 'build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './build/index.html'))
+});
 
 app.use(errorHandler);
 
 
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.clear();
     console.log(`Server running on port - ${PORT}`)
 })

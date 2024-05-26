@@ -8,8 +8,10 @@ import { useLocation, useNavigate } from 'react-router';
 
 function Login() {
     const { makeRequest, message, error, isLoading } = useApi(ENDPOINTS.USER.LOGIN, REQUEST_TYPES.POST);
+    const { makeRequest: resetPassword, response, setResponse } = useApi(ENDPOINTS.USER.RESET_PASSWORD, REQUEST_TYPES.PATCH, { updateUserdata: false });
 
     const { userData } = useContext(UserContext);
+
 
     const { state } = useLocation();
     const navigate = useNavigate();
@@ -19,18 +21,24 @@ function Login() {
         if (userData && state?.redirectionURL) {
             navigate(state.redirectionURL, { replace: true })
         }
-    }, [userData,state])
+    }, [userData, state])
 
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
+    const [showResetForm, setShowResetForm] = useState(false);
+    const [otp, setOtp] = useState(null)
+
     const isValid = username && password;
 
-
     useEffect(() => {
-        console.log("🚀 ~ useEffect ~ data,message,error:", { userData, message, error, isLoading })
-    }, [error, message, userData, isLoading])
+        console.log("🚀 ~ Login ~ response:", response)
+        if (showResetForm && response?.message === "Password reset successfully" && !error) {
+            setShowResetForm(false);
+            setResponse(null);
+        }
+    }, [response, showResetForm])
 
     const login = () => {
         const payload = { username, password }
@@ -63,13 +71,44 @@ function Login() {
                                 <FormControl placeholder='Enter password' type='password' onChange={e => setPassword(e.target.value)} />
                             </FormGroup>
                             <FormGroup className='mb-3'>
-                                <Button onClick={login} disabled={!isValid} variant='outline-primary'>Login</Button>
-                            </FormGroup>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+                                {/* <Button onClick={login} disabled={!isValid} variant='outline-primary'>Login</Button> */}
+                                {
+                                    showResetForm ?
+                                        <>
+                                            <Form.Group className="mb-3" controlId="otp">
+                                                <Form.Label>OTP</Form.Label>
+                                                <Form.Control type="number" placeholder="Code from Authenticator"
+                                                    onChange={e => setOtp(e.target.value)} />
+                                            </Form.Group>
+                                            <Button
+                                                variant="outline-primary"
+                                                onClick={() => { resetPassword({ username, password, otp });}}
+                                            disabled={!isValid && !otp} >
+                                            Reset Password
+                                        </Button>
+                            </>
+                            :
+                            <div className='d-flex justify-content-between'>
+                                <Button
+                                    variant="outline-primary"
+                                    onClick={login}
+                                    disabled={!isValid} >
+                                    Login
+                                </Button>
+
+                                <Button
+                                    variant="outline-danger"
+                                    onClick={() => { setShowResetForm(true); }}>
+                                    Forgot Password
+                                </Button>
+                            </div>
+                                }
+                        </FormGroup>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
+        </Container >
     )
 }
 

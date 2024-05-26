@@ -2,14 +2,11 @@ import { useContext, useState } from "react";
 import axiosInstance, { REQUEST_TYPES } from "./apiUtil";
 import { UserContext } from "./UserContextProvider";
 
-function useApi(url, type = REQUEST_TYPES.GET, showMessage = true) {
+function useApi(url, type = REQUEST_TYPES.GET, { showMessage = true, updateUserdata = true } = {}) {
 
     const { isError, isLoading, message, setIsError, setIsLoading, setMessage, setUserData } = useContext(UserContext);
 
-    // const [loading, setIsLoading] = useState(null)
-    // const [error, setError] = useState(null)
-    // const [data, setData] = useState(null)
-    // const [message, setMessage] = useState(null);
+    const [response, setResponse] = useState(null);
 
     const makeRequest = async (payload) => {
         try {
@@ -18,8 +15,12 @@ function useApi(url, type = REQUEST_TYPES.GET, showMessage = true) {
             setIsLoading(true);
             const { data: response } = await axiosInstance[type](url, payload);
             const { data, message } = response;
-            setUserData(data);
-            if(showMessage){
+            if (updateUserdata) {
+                setUserData(data);
+            } else {
+                setResponse(response);
+            }
+            if (showMessage) {
                 setMessage(message)
             }
             console.log("🚀 ~ makeRequest ~ response:", response)
@@ -34,7 +35,7 @@ function useApi(url, type = REQUEST_TYPES.GET, showMessage = true) {
         }
     }
 
-    return { makeRequest, isLoading, message, isError }
+    return { makeRequest, response, setResponse, isLoading, message, isError }
 
 }
 

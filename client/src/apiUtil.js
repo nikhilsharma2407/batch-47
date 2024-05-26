@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const axiosInstance = axios.create({ baseURL: 'http://localhost:4000', withCredentials: true });
+export const axiosInstance = axios.create({ baseURL: '', withCredentials: true });
 
 export const ENDPOINTS = {
     USER: {

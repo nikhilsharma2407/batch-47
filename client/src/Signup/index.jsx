@@ -8,7 +8,7 @@ import { ENDPOINTS, REQUEST_TYPES } from '../apiUtil';
 import { UserContext } from '../UserContextProvider';
 
 function Signup() {
-  const { makeRequest } = useApi(ENDPOINTS.USER.SIGNUP, REQUEST_TYPES.POST);
+  const { makeRequest, response } = useApi(ENDPOINTS.USER.SIGNUP, REQUEST_TYPES.POST, { updateUserdata: false });
 
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
@@ -16,7 +16,11 @@ function Signup() {
 
   // const [qrcode, setQrcode] = useState(null);
 
-  const { userData: qrcode } = useContext(UserContext)
+  // const { userData: qrcode } = useContext(UserContext)
+  // const { qrcode } = response || {};
+  const  qrcode  = response?.data;
+  console.log("🚀 ~ Signup ~ response:", response)
+
 
   const ENTER_KEY_CODE = 13;
 
