@@ -2,6 +2,9 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({ baseURL: '', withCredentials: true });
 
+// 5500 Liver server
+
+// LOGIN-> localhost:5500/user/login
 export const ENDPOINTS = {
     USER: {
         LOGIN: '/user/login',
